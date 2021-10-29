@@ -26,7 +26,7 @@ public class CronJob {
     public synchronized void writeStatistics() throws IOException, NoSuchFieldException,
             NoSuchMethodException, IllegalAccessException, InvocationTargetException,
             InterruptedException, SQLException, InstantiationException {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = null;
         FileWriter writer = null;
         Calendar calendar;
         List<UserEntity> list;
@@ -36,6 +36,7 @@ public class CronJob {
             try {
                 String path = PropertiesHelper.useProperty("src/main/resources/statisiticsInfo.properties")
                         .getProperty("statistics");
+                session = HibernateUtil.getSessionFactory().openSession();
                 file = addDateToFileName(path);
                 writer = new FileWriter(file, true);
                 calendar = GregorianCalendar.getInstance();
@@ -73,6 +74,10 @@ public class CronJob {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                }
+                if(session != null) {
+                    session.close();
+                    session = null;
                 }
             }
             wait(TimeUnit.MINUTES.toMillis(min));

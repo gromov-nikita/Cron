@@ -18,22 +18,13 @@ users that registered today
  */
 public class Runner {
     public static void main(String[] args) {
-        FileReader reader = null;
         try {
-            Properties properties = PropertiesHelper.useProperty("src/main/resources/dbInfo.properties");
             CronJob cronJob = new CronJob();
             cronJob.writeStatistics();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
-            if(reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

@@ -26,7 +26,6 @@ public class CronJob {
     public synchronized void writeStatistics() throws IOException, NoSuchFieldException,
             NoSuchMethodException, IllegalAccessException, InvocationTargetException,
             InterruptedException, SQLException, InstantiationException {
-        Properties properties = PropertiesHelper.useProperty("src/main/resources/queries.properties");
         Session session = HibernateUtil.getSessionFactory().openSession();
         FileWriter writer = null;
         Calendar calendar;
